@@ -4,14 +4,16 @@ from flask import Flask
 from flask import request
 from flask import jsonify
 from flask import render_template
-from flask_cors import CORS
+
+# from flask_cors import CORS
 import boto3
 from boto3.dynamodb.conditions import Key
 
 from config import DYNAMODB_TABLE
 
 app = Flask(__name__, static_folder="./dist/static", template_folder="./dist")
-cors = CORS(app, resources={r"*": {"origins": ["http://localhost*"]}})
+# app = Flask(__name__)
+# cors = CORS(app, resources={r"*": {"origins": ["http://localhost*"]}})
 
 
 def slack_notify(datetime_: str, co2: int) -> bool:
@@ -105,4 +107,4 @@ def notify():
 
 # We only need this for local development.
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000, debug=True)
+    app.run(host="0.0.0.0", port=5000, debug=False)
