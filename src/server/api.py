@@ -1,6 +1,12 @@
+from typing import List, Dict
 from flask import Flask
 from flask import request
 from flask import jsonify
+from flask import render_template
+import boto3
+from boto3.dynamodb.conditions import Key
+
+from config import DYNAMODB_TABLE
 
 app = Flask(__name__)
 
@@ -15,9 +21,26 @@ def save_db(file) -> bool:
     return True
 
 
+def fetch_data(date_: str) -> List[Dict[str, int]]:
+    dynamodb = boto3.resource("dynamodb")
+    table = dynamodb.Table(DYNAMODB_TABLE)
+    # items = table.scan()
+    # print(items)
+    # response = table.get_item(Key={"date": date_, "time": "1900"})
+    # items = response["Item"]
+    response = table.query(KeyConditionExpression=Key("date").eq(date_))
+    items = response["Items"]
+    return items
+
+
 @app.route("/")
-def index():
-    return "Hello World"
+@app.route("/<date_>")
+def index(date_=None):
+    if date_ is None:
+        items = None
+    else:
+        items = fetch_data(date_)
+    return render_template("index.html", date_=date_, items=items)
 
 
 @app.route("/save", methods=["POST"])

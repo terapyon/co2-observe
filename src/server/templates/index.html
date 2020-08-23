@@ -1,0 +1,28 @@
+<!doctype html>
+
+<head>
+    <title>terapyon CO2</title>
+</head>
+
+<body>
+    {% if date_ %}
+    <h1>{{date_}} のCO2の状態</h1>
+    <table>
+        <tr>
+            <th>時分</th>
+            <th>CO2(ppm)</th>
+            <th>温度(℃)</th>
+        </tr>
+        {% for item in items %}
+        <tr>
+            <th>{{item.get('time')}}</th>
+            <th>{{item.get('co2')}}</th>
+            <th>{{item.get('temperature')}}</th>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% else %}
+    <h1>No selected date</h1>
+    {% endif %}
+</body>
