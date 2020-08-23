@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 from datetime import datetime, timedelta
 
-# import mh_z19
+import mh_z19
 
 # HERE = os.path.dirname(os.path.abspath(__file__))
 # DATA_FOLDER = Path(HERE).parent.parent.parent / "data"
@@ -48,11 +48,11 @@ def make_filename(prev: int = 0) -> str:
     now_str, now_hour = get_now(prev)
     filename_str = now_hour + ".txt"
     filename = DATA_FOLDER / filename_str
-    return filename
+    return now_str, filename
 
 
 def save_file() -> None:
-    filename = make_filename()
+    now_str, filename = make_filename()
     # print(filename)
     data = fetch(now_str)
     with open(filename, "a") as f:

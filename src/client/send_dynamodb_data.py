@@ -7,7 +7,7 @@ from observe import make_filename
 
 
 def send():
-    filename = make_filename(1)
+    now_str, filename = make_filename(1)
     # print(filename)
     import_data(filename)
 
