@@ -38,6 +38,10 @@ def import_data(filename: str = None) -> None:
 
 
 if __name__ == "__main__":
+    """
+    export AWS_PROFILE=profile-name
+    python import_dynamodb_data.py
+    """
     import sys
 
     args = sys.argv
