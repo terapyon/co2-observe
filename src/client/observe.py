@@ -1,12 +1,12 @@
 # mh-z19
 # getting some data from mh-z19
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 import os
 import json
 from pathlib import Path
-from datetime import datetime
+from datetime import datetime, timedelta
 
-import mh_z19
+# import mh_z19
 
 # HERE = os.path.dirname(os.path.abspath(__file__))
 # DATA_FOLDER = Path(HERE).parent.parent.parent / "data"
@@ -37,18 +37,23 @@ def fetch(now_str: str) -> str:
     return json.dumps({now_str: data})
 
 
-def get_now() -> Tuple[str]:
-    now = datetime.now()
+def get_now(prev: int) -> Tuple[str]:
+    now = datetime.now() - timedelta(hours=prev)
     now_str: str = f"{now:%Y%m%d%H%M}"
     now_hour: str = f"{now:%Y%m%d%H}"
     return now_str, now_hour
 
 
-def save_file() -> None:
-    now_str, now_hour = get_now()
+def make_filename(prev: int = 0) -> str:
+    now_str, now_hour = get_now(prev)
     filename_str = now_hour + ".txt"
     filename = DATA_FOLDER / filename_str
-    print(filename)
+    return filename
+
+
+def save_file() -> None:
+    filename = make_filename()
+    # print(filename)
     data = fetch(now_str)
     with open(filename, "a") as f:
         f.write(data)
