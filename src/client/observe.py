@@ -1,6 +1,6 @@
 # mh-z19
 # getting some data from mh-z19
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple
 import os
 import json
 from pathlib import Path
@@ -8,10 +8,11 @@ from datetime import datetime
 
 import mh_z19
 
+# HERE = os.path.dirname(os.path.abspath(__file__))
+# DATA_FOLDER = Path(HERE).parent.parent.parent / "data"
+# CO2_BODER = 1000
 
-HERE = os.path.dirname(os.path.abspath(__file__))
-DATA_FOLDER = Path(HERE).parent.parent.parent / "data"
-CO2_BODER = 1000
+from config import CO2_BODER, DATA_FOLDER
 
 
 def check_border(co2: int) -> bool:
